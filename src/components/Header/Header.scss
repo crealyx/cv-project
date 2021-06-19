@@ -1,0 +1,11 @@
+@import 'variables';
+
+header {
+  position: sticky;
+  border-bottom: solid 5px rgb(255, 255, 255);
+  top: 0;
+  background-color: $primary-blue;
+  color: rgb(255, 255, 255);
+  height: 50px;
+  text-align: center;
+}

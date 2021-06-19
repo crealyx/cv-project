@@ -1,0 +1,22 @@
+@import 'variables';
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.edit-button,
+.submit-button {
+  outline: none;
+  border: none;
+  width: 150px;
+  background-color: $primary-blue;
+  color: white;
+  padding-top: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $primary-orange;
+  }
+}

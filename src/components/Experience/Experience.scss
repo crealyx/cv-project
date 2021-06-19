@@ -1,0 +1,28 @@
+.experience-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.main-tasks {
+  grid-column: 1/3;
+}
+
+.main-tasks-input {
+  height: 100px;
+  grid-column: 1/3;
+}
+
+.company-name {
+  grid-column: 1/2;
+}
+.company-name-input {
+  grid-column: 1/2;
+}
+.position-title {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+.position-title-input {
+  grid-column: 2/3;
+}

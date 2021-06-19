@@ -1,0 +1,6 @@
+@import 'variables';
+.App {
+  background-color: $secondary-blue;
+  display: flex;
+  flex-direction: column;
+}

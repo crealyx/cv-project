@@ -1,0 +1,26 @@
+@import 'mixins';
+
+.education-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.school-name {
+  grid-column: 1/2;
+}
+.school-name-input {
+  grid-column: 1/2;
+}
+.study-title {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+.study-title-input {
+  grid-column: 2/3;
+}
+
+h3 {
+  margin-top: 10px;
+  grid-column: 1/3;
+}
