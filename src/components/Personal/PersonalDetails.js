@@ -1,6 +1,9 @@
 import EditButton from '../Buttons/EditButton';
 
 function PersonalDetails(props) {
+  const editFormHandler = () => {
+    props.onEdit();
+  };
   return (
     <div className="personal-details">
       <div className="details-container">
@@ -13,7 +16,7 @@ function PersonalDetails(props) {
         <h2 className="phone-number">Phone Number</h2>
         <p>{props.passedData.phone}</p>
       </div>
-      <EditButton></EditButton>
+      <EditButton clicked={editFormHandler}></EditButton>
     </div>
   );
 }

@@ -9,14 +9,25 @@ import AddButton from '../Buttons/AddButton';
 function App() {
   const [educationFormList, setEducationFormList] = useState([]);
   const [experienceFormList, setExperienceFormList] = useState([]);
-  const personalDetailsHandler = (personalData) => {
-    setPersonalFormState(
-      <PersonalDetails passedData={personalData}></PersonalDetails>
+
+  const editDetailsHandler = () => {
+    setPersonalInformation(
+      <PersonalForm onSubmit={submitFormHandler}></PersonalForm>
     );
   };
-  const [personalFormState, setPersonalFormState] = useState([
-    <PersonalForm onSubmit={personalDetailsHandler}></PersonalForm>,
-  ]);
+  const submitFormHandler = (personalData) => {
+    setPersonalInformation(
+      <PersonalDetails
+        onEdit={editDetailsHandler}
+        passedData={personalData}
+      ></PersonalDetails>
+    );
+  };
+
+  const [personalInformation, setPersonalInformation] = useState(
+    <PersonalForm onSubmit={submitFormHandler}></PersonalForm>
+  );
+
   const educationComponentHandler = () => {
     setEducationFormList(
       educationFormList.concat(<Education key={educationFormList.length} />)
@@ -30,7 +41,7 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      <Card>{personalFormState}</Card>
+      <Card>{personalInformation}</Card>
       <Card>
         <h1>Education</h1>
         {educationFormList}

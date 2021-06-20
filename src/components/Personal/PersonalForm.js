@@ -1,4 +1,3 @@
-import Card from '../Card/Card';
 import SubmitButton from '../Buttons/SubmitButton';
 import { useState } from 'react';
 
