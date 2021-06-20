@@ -1,10 +1,8 @@
-import Buttons from '../Buttons/Buttons';
-import Card from '../Card/Card';
+import SubmitButton from '../Buttons/SubmitButton';
 
 function Education(props) {
   return (
-    <Card className="card">
-      <h1>Education</h1>
+    <div className="education-cont">
       <form action="submit" className="education-form">
         <label htmlFor="school-name" className="school-name">
           School Name
@@ -28,8 +26,8 @@ function Education(props) {
         <input type="date" />
         <input type="date" />
       </form>
-      <Buttons></Buttons>
-    </Card>
+      <SubmitButton></SubmitButton>
+    </div>
   );
 }
 

@@ -1,6 +1,10 @@
 import Card from '../Card/Card';
+import SubmitButton from '../Buttons/SubmitButton';
 
 function Personal(props) {
+  const previewHandler = () => {
+    console.log('submit');
+  };
   return (
     <Card className="card">
       <h1>Personal Information</h1>
@@ -12,7 +16,7 @@ function Personal(props) {
 
         <input name="phone-number" type="number" placeholder="Phone Number" />
       </form>
-      <input type="submit" value="Submit" className="submit-button" />
+      <SubmitButton submitForm={previewHandler}></SubmitButton>
     </Card>
   );
 }

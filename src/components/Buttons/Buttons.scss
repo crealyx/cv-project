@@ -3,11 +3,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 30px;
 }
 
 .edit-button,
-.submit-button {
+.submit-button,
+.add-button {
   outline: none;
   border: none;
   width: 150px;
@@ -19,4 +19,5 @@
   &:hover {
     background-color: $primary-orange;
   }
+  margin-top: 30px;
 }

@@ -1,10 +1,8 @@
-import Buttons from '../Buttons/Buttons';
-import Card from '../Card/Card';
+import SubmitButton from '../Buttons/SubmitButton';
 
 function Experience(props) {
   return (
-    <Card className="card">
-      <h1>Experience</h1>
+    <div className="experience-cont">
       <form action="submit" className="experience-form">
         <label htmlFor="company-name" className="company-name">
           Company Name
@@ -35,8 +33,8 @@ function Experience(props) {
         <input type="date" />
         <input type="date" />
       </form>
-      <Buttons></Buttons>
-    </Card>
+      <SubmitButton></SubmitButton>
+    </div>
   );
 }
 

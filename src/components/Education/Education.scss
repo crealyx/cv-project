@@ -1,11 +1,15 @@
-@import 'mixins';
+@import 'variables';
 
 .education-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
-
+.education-cont {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 3px solid $primary-orange;
+}
 .school-name {
   grid-column: 1/2;
 }
