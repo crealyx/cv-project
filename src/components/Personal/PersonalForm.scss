@@ -4,3 +4,13 @@
   margin: 10px 100px;
   gap: 10px;
 }
+
+.last-name {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.phone-number {
+  grid-column: 2/3;
+  grid-row: 3/4;
+}
