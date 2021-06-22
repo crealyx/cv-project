@@ -4,6 +4,10 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  p {
+    border-bottom: 2px solid black;
+    margin: 0 20px;
+  }
 }
 .education-cont {
   padding-bottom: 20px;

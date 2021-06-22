@@ -2,15 +2,18 @@ import SubmitButton from '../Buttons/SubmitButton';
 import { useState } from 'react';
 
 function PersonalForm(props) {
-  const [firstNameData, setFirstNameData] = useState('');
-  const [lastNameData, setLastNameData] = useState('');
-  const [emailData, setEmailData] = useState('');
-  const [phoneData, setPhoneData] = useState('');
+  const [firstNameData, setFirstNameData] = useState(
+    props.passedData.firstName
+  );
+  const [lastNameData, setLastNameData] = useState(props.passedData.lastName);
+  const [emailData, setEmailData] = useState(props.passedData.email);
+  const [phoneData, setPhoneData] = useState(props.passedData.phone);
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const personalData = {
+      dataType: 'personal',
       firstName: firstNameData,
       lastName: lastNameData,
       email: emailData,
@@ -33,6 +36,7 @@ function PersonalForm(props) {
   const phoneHandler = (event) => {
     setPhoneData(event.target.value);
   };
+
   return (
     <div>
       <h1>Personal Information</h1>

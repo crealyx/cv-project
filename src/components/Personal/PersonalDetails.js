@@ -6,6 +6,7 @@ function PersonalDetails(props) {
   };
   return (
     <div className="personal-details">
+      <h1>Personal Information</h1>
       <div className="details-container">
         <h2 className="first-name">First Name</h2>
         <p>{props.passedData.firstName}</p>
