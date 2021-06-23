@@ -1,8 +1,8 @@
 import SubmitButton from '../Buttons/SubmitButton';
 import { useState } from 'react';
+import EducationDetails from './EducationDetails';
 function EducationForm(props) {
   const [educationData, setEducationData] = useState({
-    type: 'education',
     schoolName: '',
     studyTitle: '',
     fromDate: '',
@@ -18,9 +18,22 @@ function EducationForm(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onSubmit(educationData);
+    setEditMode((previousMode) => !previousMode);
   };
+  const { schoolName, studyTitle, fromDate, toDate } = educationData;
+  const [editMode, setEditMode] = useState(false);
 
+  if (editMode) {
+    return (
+      <EducationDetails
+        schoolName={schoolName}
+        studyTitle={studyTitle}
+        fromDate={fromDate}
+        toDate={toDate}
+        onEdit={() => setEditMode((previousMode) => !previousMode)}
+      ></EducationDetails>
+    );
+  }
   return (
     <div className="education-cont">
       <form action="submit" className="education-form">

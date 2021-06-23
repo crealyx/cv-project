@@ -1,65 +1,35 @@
 import EducationForm from '../Education/EducationForm';
-import EducationDetails from '../Education/EducationDetails';
-import Experience from '../Experience/ExperienceForm';
+import ExperienceForm from '../Experience/ExperienceForm';
 import PersonalForm from '../Personal/PersonalForm';
 import PersonalDetails from '../Personal/PersonalDetails';
 import Header from '../Header/Header';
 import Card from '../Card/Card';
 import React, { useState } from 'react';
 import AddButton from '../Buttons/AddButton';
+import { v4 as uuidv4 } from 'uuid';
 function App() {
-  // Event Handlers
-  const educationComponentHandler = () => {
-    setEducationFormList(
-      educationFormList.concat(
-        <EducationForm
-          passedData={editableEducationData}
-          onSubmit={educationSubmitHandler}
-          key={educationFormList.length}
-          educationFormId={educationFormList.length}
-        />
-      )
-    );
-    setEducationDetailsList(
-      educationDetailsList.concat(
-        <EducationDetails
-          onEdit={() => {
-            setEducationEditing(false);
-          }}
-          passedData={editableEducationData}
-          key={educationDetailsList.length}
-          educationDetailsId={educationDetailsList.length}
-        />
-      )
-    );
-  };
-  const experienceComponentHandler = () => {
-    setExperienceFormList(
-      experienceFormList.concat(<Experience key={experienceFormList.length} />)
-    );
+  const [educationIds, setEducationIds] = useState([]);
+  const [experienceIds, setExperienceIds] = useState([]);
+
+  const addComponentHandler = (type) => {
+    if (type === 'education') {
+      setEducationIds((prevEducationIds) => [...prevEducationIds, uuidv4()]);
+    } else {
+      setExperienceIds((prevExperienceIds) => [...prevExperienceIds, uuidv4()]);
+    }
   };
 
+  const educationForms = educationIds.map((id) => (
+    <EducationForm key={id} id={id} />
+  ));
   const personalSubmitHandler = (data) => {
     setEditablePersonalData(data);
     setPersonalEditing(true);
   };
-  const educationSubmitHandler = (data) => {
-    console.log(data);
-    setEditableEducationData(data);
-    console.log(editableEducationData);
-    setEducationEditing(true);
-  };
 
   // State Hooks
-  const [isEducationEditing, setEducationEditing] = useState(false);
   const [isPersonalEditing, setPersonalEditing] = useState(false);
-  const [educationDetailsList, setEducationDetailsList] = useState([]);
-  const [educationFormList, setEducationFormList] = useState([]);
-  const [experienceFormList, setExperienceFormList] = useState([]);
   const [editablePersonalData, setEditablePersonalData] = useState(
-    (prevState) => ({ ...prevState })
-  );
-  const [editableEducationData, setEditableEducationData] = useState(
     (prevState) => ({ ...prevState })
   );
   return (
@@ -82,14 +52,13 @@ function App() {
       </Card>
       <Card>
         <h1>Education</h1>
-        {isEducationEditing ? educationDetailsList : educationFormList}
-
-        {<AddButton addComponent={educationComponentHandler} />}
+        {educationForms}
+        {<AddButton addComponent={() => addComponentHandler('education')} />}
       </Card>
       <Card>
         <h1>Experience</h1>
-        {experienceFormList}
-        {<AddButton addComponent={experienceComponentHandler} />}
+
+        {<AddButton addComponent={() => addComponentHandler('experience')} />}
       </Card>
     </div>
   );
