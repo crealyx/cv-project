@@ -4,6 +4,9 @@ function ExperienceDetails(props) {
   const editFormHandler = () => {
     props.onEdit();
   };
+  const deleteHandler = () => {
+    props.onDelete();
+  };
   return (
     <div className="experience-cont">
       <form action="submit" className="experience-form">
@@ -24,7 +27,10 @@ function ExperienceDetails(props) {
         <p>{props.fromDate}</p>
         <p>{props.toDate}</p>
       </form>
-      {[<EditButton clicked={editFormHandler} />, <DeleteButton />]}
+      {[
+        <EditButton clicked={editFormHandler} />,
+        <DeleteButton clicked={deleteHandler} />,
+      ]}
     </div>
   );
 }

@@ -4,6 +4,9 @@ function EducationDetails(props) {
   const editFormHandler = () => {
     props.onEdit();
   };
+  const deleteHandler = () => {
+    props.onDelete();
+  };
   return (
     <div className="education-cont">
       <form action="submit" className="education-form">
@@ -21,7 +24,10 @@ function EducationDetails(props) {
         <p>{props.fromDate}</p>
         <p>{props.toDate}</p>
       </form>
-      {[<EditButton clicked={editFormHandler} />, <DeleteButton />]}
+      {[
+        <EditButton clicked={editFormHandler} />,
+        <DeleteButton clicked={deleteHandler} />,
+      ]}
     </div>
   );
 }

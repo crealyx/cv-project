@@ -18,12 +18,24 @@ function App() {
       setExperienceIds((prevExperienceIds) => [...prevExperienceIds, uuidv4()]);
     }
   };
-
+  const deleteComponentHandler = (type, id) => {
+    if (type === 'education') {
+      setEducationIds((previousEducationIds) => {
+        let deletedList = previousEducationIds.filter((key) => key !== id);
+        return deletedList;
+      });
+    } else {
+      setExperienceIds((previousExperienceIds) => {
+        let deletedList = previousExperienceIds.filter((key) => key !== id);
+        return deletedList;
+      });
+    }
+  };
   const educationForms = educationIds.map((id) => (
-    <EducationForm key={id} id={id} />
+    <EducationForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
   const experienceForms = experienceIds.map((id) => (
-    <ExperienceForm key={id} id={id} />
+    <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
   const personalSubmitHandler = (data) => {
     setEditablePersonalData(data);

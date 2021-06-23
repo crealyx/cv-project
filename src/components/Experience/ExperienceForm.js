@@ -24,7 +24,7 @@ function Experience(props) {
   const { companyName, positionTitle, mainTasks, fromDate, toDate } =
     experienceData;
   const [editMode, setEditMode] = useState(false);
-
+  const { id, onDelete } = props;
   if (editMode) {
     return (
       <ExperienceDetails
@@ -34,6 +34,7 @@ function Experience(props) {
         fromDate={fromDate}
         toDate={toDate}
         onEdit={() => setEditMode((previousMode) => !previousMode)}
+        onDelete={() => onDelete('experience', id)}
       ></ExperienceDetails>
     );
   }

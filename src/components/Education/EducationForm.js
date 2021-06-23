@@ -21,6 +21,7 @@ function EducationForm(props) {
     setEditMode((previousMode) => !previousMode);
   };
   const { schoolName, studyTitle, fromDate, toDate } = educationData;
+  const { id, onDelete } = props;
   const [editMode, setEditMode] = useState(false);
 
   if (editMode) {
@@ -31,6 +32,7 @@ function EducationForm(props) {
         fromDate={fromDate}
         toDate={toDate}
         onEdit={() => setEditMode((previousMode) => !previousMode)}
+        onDelete={() => onDelete('education', id)}
       ></EducationDetails>
     );
   }
