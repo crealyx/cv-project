@@ -40,11 +40,41 @@ function App() {
     <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
 
-  const changeToPreview = () => {
+  const changeToPreview = (e) => {
+    if (
+      e.target.classList.contains('preview-button') &&
+      buttonPosition === 'right'
+    ) {
+      setButtonPosition('left');
+      e.target.style.left = '0';
+      e.target.style.transform = 'scale(-1,-1)';
+    } else if (
+      e.target.classList.contains('preview-button') &&
+      buttonPosition === 'left'
+    ) {
+      setButtonPosition('right');
+      e.target.style.left = '';
+      e.target.style.transform = 'scale(1,-1)';
+    } else if (
+      e.target.parentElement.classList.contains('preview-button') &&
+      buttonPosition === 'right'
+    ) {
+      setButtonPosition('left');
+      e.target.parentElement.style.left = '0';
+      e.target.parentElement.style.transform = 'scale(-1,-1)';
+    } else if (
+      e.target.parentElement.classList.contains('preview-button') &&
+      buttonPosition === 'left'
+    ) {
+      setButtonPosition('right');
+      e.target.parentElement.style.left = '';
+      e.target.parentElement.style.transform = 'scale(1,-1)';
+    }
     setPreview((prevState) => !prevState);
   };
   // State Hooks
   const [isPreview, setPreview] = useState(false);
+  const [buttonPosition, setButtonPosition] = useState('right');
   return (
     <div className="App">
       <Header></Header>
@@ -73,9 +103,7 @@ function App() {
           </Card>
         </div>
       ) : (
-        <Card>
-          <Cv></Cv>
-        </Card>
+        <Cv></Cv>
       )}
       <PreviewButton onClick={changeToPreview}></PreviewButton>
     </div>

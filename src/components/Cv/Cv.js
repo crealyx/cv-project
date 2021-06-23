@@ -1,20 +1,23 @@
 import PersonalDetails from '../Personal/PersonalDetails';
+import ExperienceCv from './ExperienceCv';
+import EducationCv from './EducationCv';
+import Card from '../Card/Card';
 function Cv(props) {
   return (
-    <div className="cv-container">
-      <div className="personal-details">
-        <h1>Personal Information</h1>
-        <div className="details-container">
-          <h2 className="first-name">First Name</h2>
-          <p>{props.firstName}</p>
-          <h2 className="last-name">Last Name</h2>
-          <p>{props.lastName}</p>
-          <h2 className="email">E-Mail</h2>
-          <p>{props.email}</p>
-          <h2 className="phone-number">Phone Number</h2>
-          <p>{props.phone}</p>
+    <div>
+      <Card className="cv-container">
+        <div className="personal-cv">
+          <h1>John Doe</h1>
+          <div>
+            <h2>E-mail: john@doe.com</h2>
+            <h2>Number: 123456789</h2>
+          </div>
         </div>
-      </div>
+        <h1 className="education">Education</h1>
+        <EducationCv></EducationCv>
+        <h1 className="experience-cv-title">Experience</h1>
+        <ExperienceCv></ExperienceCv>
+      </Card>
     </div>
   );
 }

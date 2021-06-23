@@ -1,9 +1,9 @@
 function PreviewButton(props) {
-  const previewHandler = () => {
-    props.onClick();
+  const previewHandler = (e) => {
+    props.onClick(e);
   };
   return (
-    <div onClick={previewHandler} className="preview-button">
+    <div onClick={(e) => previewHandler(e)} className="preview-button">
       <p>{'>>'}</p>
     </div>
   );
