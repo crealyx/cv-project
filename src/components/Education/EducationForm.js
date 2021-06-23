@@ -1,4 +1,5 @@
 import SubmitButton from '../Buttons/SubmitButton';
+import DeleteButton from '../Buttons/DeleteButton';
 import { useState } from 'react';
 import EducationDetails from './EducationDetails';
 function EducationForm(props) {
@@ -23,7 +24,6 @@ function EducationForm(props) {
   const { schoolName, studyTitle, fromDate, toDate } = educationData;
   const { id, onDelete } = props;
   const [editMode, setEditMode] = useState(false);
-
   if (editMode) {
     return (
       <EducationDetails
@@ -38,6 +38,7 @@ function EducationForm(props) {
   }
   return (
     <div className="education-cont">
+      <h1>Education Form</h1>
       <form action="submit" className="education-form">
         <label htmlFor="school-name" className="school-name">
           School Name
@@ -77,7 +78,10 @@ function EducationForm(props) {
           type="date"
         />
       </form>
-      <SubmitButton submitForm={submitHandler}></SubmitButton>
+      {[
+        <SubmitButton submitForm={submitHandler}></SubmitButton>,
+        <DeleteButton clicked={() => onDelete('education', id)} />,
+      ]}
     </div>
   );
 }

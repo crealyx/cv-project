@@ -22,3 +22,35 @@
   }
   margin: 30px 20px;
 }
+
+.preview-button {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 150px;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  &:hover {
+    background-color: rgb(255, 255, 255);
+    transition: all 0.5s ease-in-out;
+    color: black;
+  }
+  p {
+    margin: 340px auto;
+
+    font-size: 5rem;
+    animation: arrow 1s infinite alternate ease-in-out;
+  }
+}
+
+@keyframes arrow {
+  0% {
+    transform: translateX(-0.1em);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 0.9;
+  }
+}

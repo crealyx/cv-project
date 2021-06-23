@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import Card from '../Card/Card';
 import React, { useState } from 'react';
 import AddButton from '../Buttons/AddButton';
+import PreviewButton from '../Buttons/PreviewButton';
 import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [educationIds, setEducationIds] = useState([]);
@@ -50,31 +51,34 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      <Card>
-        {isPersonalEditing ? (
-          <PersonalDetails
-            onEdit={() => {
-              setPersonalEditing(false);
-            }}
-            passedData={editablePersonalData}
-          ></PersonalDetails>
-        ) : (
-          <PersonalForm
-            passedData={editablePersonalData}
-            onSubmit={personalSubmitHandler}
-          ></PersonalForm>
-        )}
-      </Card>
-      <Card>
-        <h1>Education</h1>
-        {educationForms}
-        {<AddButton addComponent={() => addComponentHandler('education')} />}
-      </Card>
-      <Card>
-        <h1>Experience</h1>
-        {experienceForms}
-        {<AddButton addComponent={() => addComponentHandler('experience')} />}
-      </Card>
+      <div className="main-container">
+        <Card>
+          {isPersonalEditing ? (
+            <PersonalDetails
+              onEdit={() => {
+                setPersonalEditing(false);
+              }}
+              passedData={editablePersonalData}
+            ></PersonalDetails>
+          ) : (
+            <PersonalForm
+              passedData={editablePersonalData}
+              onSubmit={personalSubmitHandler}
+            ></PersonalForm>
+          )}
+        </Card>
+        <Card>
+          <h1>Education</h1>
+          {educationForms}
+          {<AddButton addComponent={() => addComponentHandler('education')} />}
+        </Card>
+        <Card>
+          <h1>Experience</h1>
+          {experienceForms}
+          {<AddButton addComponent={() => addComponentHandler('experience')} />}
+        </Card>
+      </div>
+      <PreviewButton></PreviewButton>
     </div>
   );
 }

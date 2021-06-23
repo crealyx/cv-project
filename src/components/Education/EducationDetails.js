@@ -9,6 +9,7 @@ function EducationDetails(props) {
   };
   return (
     <div className="education-cont">
+      <h1>Education Form</h1>
       <form action="submit" className="education-form">
         <label htmlFor="school-name" className="school-name">
           School Name

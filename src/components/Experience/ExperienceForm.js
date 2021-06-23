@@ -1,4 +1,5 @@
 import SubmitButton from '../Buttons/SubmitButton';
+import DeleteButton from '../Buttons/DeleteButton';
 import ExperienceDetails from './ExperienceDetails';
 import { useState } from 'react';
 function Experience(props) {
@@ -89,7 +90,10 @@ function Experience(props) {
           onChange={changeHandler}
         />
       </form>
-      <SubmitButton submitForm={submitHandler}></SubmitButton>
+      {[
+        <SubmitButton submitForm={submitHandler}></SubmitButton>,
+        <DeleteButton clicked={() => onDelete('experience', id)} />,
+      ]}
     </div>
   );
 }
