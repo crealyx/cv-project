@@ -7,6 +7,7 @@ import Card from '../Card/Card';
 import React, { useState } from 'react';
 import AddButton from '../Buttons/AddButton';
 import PreviewButton from '../Buttons/PreviewButton';
+import Cv from '../Cv/Cv';
 import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [educationIds, setEducationIds] = useState([]);
@@ -38,47 +39,45 @@ function App() {
   const experienceForms = experienceIds.map((id) => (
     <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
-  const personalSubmitHandler = (data) => {
-    setEditablePersonalData(data);
-    setPersonalEditing(true);
-  };
 
+  const changeToPreview = () => {
+    setPreview((prevState) => !prevState);
+  };
   // State Hooks
-  const [isPersonalEditing, setPersonalEditing] = useState(false);
-  const [editablePersonalData, setEditablePersonalData] = useState(
-    (prevState) => ({ ...prevState })
-  );
+  const [isPreview, setPreview] = useState(false);
   return (
     <div className="App">
       <Header></Header>
-      <div className="main-container">
+      {!isPreview ? (
+        <div className="main-container">
+          <Card>
+            <PersonalForm></PersonalForm>
+          </Card>
+          <Card>
+            <h1>Education</h1>
+            {educationForms}
+            {
+              <AddButton
+                addComponent={() => addComponentHandler('education')}
+              />
+            }
+          </Card>
+          <Card>
+            <h1>Experience</h1>
+            {experienceForms}
+            {
+              <AddButton
+                addComponent={() => addComponentHandler('experience')}
+              />
+            }
+          </Card>
+        </div>
+      ) : (
         <Card>
-          {isPersonalEditing ? (
-            <PersonalDetails
-              onEdit={() => {
-                setPersonalEditing(false);
-              }}
-              passedData={editablePersonalData}
-            ></PersonalDetails>
-          ) : (
-            <PersonalForm
-              passedData={editablePersonalData}
-              onSubmit={personalSubmitHandler}
-            ></PersonalForm>
-          )}
+          <Cv></Cv>
         </Card>
-        <Card>
-          <h1>Education</h1>
-          {educationForms}
-          {<AddButton addComponent={() => addComponentHandler('education')} />}
-        </Card>
-        <Card>
-          <h1>Experience</h1>
-          {experienceForms}
-          {<AddButton addComponent={() => addComponentHandler('experience')} />}
-        </Card>
-      </div>
-      <PreviewButton></PreviewButton>
+      )}
+      <PreviewButton onClick={changeToPreview}></PreviewButton>
     </div>
   );
 }

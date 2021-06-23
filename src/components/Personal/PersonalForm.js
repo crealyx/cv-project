@@ -1,73 +1,70 @@
 import SubmitButton from '../Buttons/SubmitButton';
 import { useState } from 'react';
-
+import PersonalDetails from './PersonalDetails';
 function PersonalForm(props) {
-  const [firstNameData, setFirstNameData] = useState(
-    props.passedData.firstName
-  );
-  const [lastNameData, setLastNameData] = useState(props.passedData.lastName);
-  const [emailData, setEmailData] = useState(props.passedData.email);
-  const [phoneData, setPhoneData] = useState(props.passedData.phone);
-
+  const [personalData, setPersonalData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+  });
   const submitHandler = (event) => {
     event.preventDefault();
-
-    const personalData = {
-      dataType: 'personal',
-      firstName: firstNameData,
-      lastName: lastNameData,
-      email: emailData,
-      phone: phoneData,
-    };
-    props.onSubmit(personalData);
+    setEditMode((previousMode) => !previousMode);
   };
-
-  const firstNameHandler = (event) => {
-    setFirstNameData(event.target.value);
+  const changeHandler = (event) => {
+    const { name, value } = event.target;
+    setPersonalData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
-
-  const lastNameHandler = (event) => {
-    setLastNameData(event.target.value);
-  };
-
-  const emailHandler = (event) => {
-    setEmailData(event.target.value);
-  };
-  const phoneHandler = (event) => {
-    setPhoneData(event.target.value);
-  };
-
+  const { firstName, lastName, email, phone } = personalData;
+  const [editMode, setEditMode] = useState(false);
+  if (editMode) {
+    return (
+      <PersonalDetails
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
+        phone={phone}
+        onEdit={() => setEditMode((previousMode) => !previousMode)}
+      ></PersonalDetails>
+    );
+  }
   return (
     <div>
       <h1>Personal Information</h1>
       <form action="submit" className="personal-form">
         <input
           type="text"
+          name="firstName"
           placeholder="First Name"
-          value={firstNameData}
-          onChange={firstNameHandler}
+          value={personalData.firstName}
+          onChange={changeHandler}
         />
         <input
           type="text"
+          name="lastName"
           placeholder="Last Name"
-          value={lastNameData}
-          onChange={lastNameHandler}
+          value={personalData.lastName}
+          onChange={changeHandler}
         />
 
         <input
           name="email"
           type="text"
           placeholder="E-Mail"
-          value={emailData}
-          onChange={emailHandler}
+          value={personalData.email}
+          onChange={changeHandler}
         />
 
         <input
-          name="phone-number"
+          name="phone"
           type="tel"
           placeholder="Phone Number"
-          value={phoneData}
-          onChange={phoneHandler}
+          value={personalData.phone}
+          onChange={changeHandler}
         />
       </form>
       <SubmitButton submitForm={submitHandler}></SubmitButton>

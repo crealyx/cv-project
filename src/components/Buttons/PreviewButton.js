@@ -1,6 +1,9 @@
-function PreviewButton() {
+function PreviewButton(props) {
+  const previewHandler = () => {
+    props.onClick();
+  };
   return (
-    <div className="preview-button">
+    <div onClick={previewHandler} className="preview-button">
       <p>{'>>'}</p>
     </div>
   );

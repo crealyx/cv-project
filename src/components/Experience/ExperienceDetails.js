@@ -9,6 +9,7 @@ function ExperienceDetails(props) {
   };
   return (
     <div className="experience-cont">
+      <h1>Experience Details</h1>
       <form action="submit" className="experience-form">
         <label htmlFor="company-name" className="company-name">
           Company Name
