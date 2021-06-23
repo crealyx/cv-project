@@ -22,6 +22,9 @@ function App() {
   const educationForms = educationIds.map((id) => (
     <EducationForm key={id} id={id} />
   ));
+  const experienceForms = experienceIds.map((id) => (
+    <ExperienceForm key={id} id={id} />
+  ));
   const personalSubmitHandler = (data) => {
     setEditablePersonalData(data);
     setPersonalEditing(true);
@@ -57,7 +60,7 @@ function App() {
       </Card>
       <Card>
         <h1>Experience</h1>
-
+        {experienceForms}
         {<AddButton addComponent={() => addComponentHandler('experience')} />}
       </Card>
     </div>

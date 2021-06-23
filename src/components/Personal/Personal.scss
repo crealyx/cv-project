@@ -1,3 +1,17 @@
+.details-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 10px 100px;
+  gap: 0px;
+  p {
+    border-bottom: 2px solid black;
+    margin: 0 20px;
+  }
+  h2 {
+    margin-top: 10px;
+  }
+}
+
 .personal-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
