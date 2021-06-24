@@ -1,11 +1,14 @@
-function EducationCv() {
+function EducationCv(props) {
+  console.log(props.educationData);
   return (
     <div className="education-cv">
       <div className="school-cv">
-        <h2>School Name: schoolName</h2>
-        <h2>Study Title: schoolTitle</h2>
+        <h2>School Name: {props.educationData.schoolName}</h2>
+        <h2>Study Title: {'schoolTitle'}</h2>
       </div>
-      <h2>2016-2020</h2>
+      <h2>
+        {'fromDate'}-{'toDate'}
+      </h2>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import EducationDetails from './EducationDetails';
 function EducationForm(props) {
   const [educationData, setEducationData] = useState({
+    id: props.id,
     schoolName: '',
     studyTitle: '',
     fromDate: '',
@@ -20,6 +21,7 @@ function EducationForm(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     setEditMode((previousMode) => !previousMode);
+    props.passData(educationData);
   };
   const { schoolName, studyTitle, fromDate, toDate } = educationData;
   const { id, onDelete } = props;

@@ -12,12 +12,15 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [educationIds, setEducationIds] = useState([]);
   const [experienceIds, setExperienceIds] = useState([]);
+  const [passedData, setPassedData] = useState();
 
   const addComponentHandler = (type) => {
     if (type === 'education') {
-      setEducationIds((prevEducationIds) => [...prevEducationIds, uuidv4()]);
+      let newId = uuidv4();
+      setEducationIds((prevEducationIds) => [...prevEducationIds, newId]);
     } else {
-      setExperienceIds((prevExperienceIds) => [...prevExperienceIds, uuidv4()]);
+      let newId = uuidv4();
+      setExperienceIds((prevExperienceIds) => [...prevExperienceIds, newId]);
     }
   };
   const deleteComponentHandler = (type, id) => {
@@ -33,14 +36,26 @@ function App() {
       });
     }
   };
+  const dataHandler = (data) => {
+    setPassedData(data);
+    setEducationDataList((prevState) => [...prevState, data]);
+    console.log(educationDataList);
+  };
+  const [educationDataList, setEducationDataList] = useState([]);
   const educationForms = educationIds.map((id) => (
-    <EducationForm key={id} id={id} onDelete={deleteComponentHandler} />
+    <EducationForm
+      key={id}
+      id={id}
+      passData={dataHandler}
+      onDelete={deleteComponentHandler}
+    />
   ));
   const experienceForms = experienceIds.map((id) => (
     <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
 
   const changeToPreview = (e) => {
+    console.log(educationForms);
     if (
       e.target.classList.contains('preview-button') &&
       buttonPosition === 'right'
@@ -103,7 +118,7 @@ function App() {
           </Card>
         </div>
       ) : (
-        <Cv></Cv>
+        <Cv educationIds={educationIds} educationData={educationDataList}></Cv>
       )}
       <PreviewButton onClick={changeToPreview}></PreviewButton>
     </div>

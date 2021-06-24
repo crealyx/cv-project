@@ -1,7 +1,6 @@
 function ExperienceCv() {
   return (
     <div className="experience-cv-container">
-      <div className="test"></div>
       <div className="job-info">
         <h2>Company Name:</h2>
         <h2>Position Title:</h2>
@@ -35,6 +34,7 @@ function ExperienceCv() {
           dolor molestias.
         </p>
       </div>
+      <div className="test"></div>
     </div>
   );
 }

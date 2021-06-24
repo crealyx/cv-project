@@ -2,7 +2,15 @@ import PersonalDetails from '../Personal/PersonalDetails';
 import ExperienceCv from './ExperienceCv';
 import EducationCv from './EducationCv';
 import Card from '../Card/Card';
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 function Cv(props) {
+  const educationCvList = props.educationIds.map((id) => {
+    let newData = props.educationData.filter((data) => data.id === id);
+    console.log(newData);
+    return <EducationCv key={uuidv4()} educationData={newData[0]} />;
+  });
   return (
     <div>
       <Card className="cv-container">
@@ -14,7 +22,7 @@ function Cv(props) {
           </div>
         </div>
         <h1 className="education">Education</h1>
-        <EducationCv></EducationCv>
+        {educationCvList}
         <h1 className="experience-cv-title">Experience</h1>
         <ExperienceCv></ExperienceCv>
       </Card>
