@@ -2,8 +2,9 @@ import SubmitButton from '../Buttons/SubmitButton';
 import DeleteButton from '../Buttons/DeleteButton';
 import ExperienceDetails from './ExperienceDetails';
 import { useState } from 'react';
-function Experience(props) {
+function ExperienceForm(props) {
   const [experienceData, setExperienceData] = useState({
+    id: props.id,
     companyName: '',
     positionTitle: '',
     mainTasks: '',
@@ -21,6 +22,7 @@ function Experience(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     setEditMode((previousMode) => !previousMode);
+    props.passData(experienceData);
   };
   const { companyName, positionTitle, mainTasks, fromDate, toDate } =
     experienceData;
@@ -99,4 +101,4 @@ function Experience(props) {
   );
 }
 
-export default Experience;
+export default ExperienceForm;

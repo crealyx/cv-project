@@ -1,5 +1,4 @@
 import EditButton from '../Buttons/EditButton';
-
 function PersonalDetails(props) {
   const editFormHandler = () => {
     props.onEdit();

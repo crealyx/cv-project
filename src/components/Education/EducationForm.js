@@ -1,39 +1,70 @@
 import SubmitButton from '../Buttons/SubmitButton';
 import DeleteButton from '../Buttons/DeleteButton';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import EducationDetails from './EducationDetails';
+import FormDataContext from '../../store/form-data-context';
+import { v4 as uuidv4 } from 'uuid';
+
 function EducationForm(props) {
-  const [educationData, setEducationData] = useState({
-    id: props.id,
-    schoolName: '',
-    studyTitle: '',
-    fromDate: '',
-    toDate: '',
-  });
+  const dataCtx = useContext(FormDataContext);
+  const currentDataArray = dataCtx.education.filter(
+    (data) => data.id === props.id
+  );
+  const [current, setCurrent] = useState(
+    currentDataArray[0] || {
+      id: props.id,
+      schoolName: '',
+      studyTitle: '',
+      fromDate: '',
+      toDate: '',
+    }
+  );
+  const [editMode, setEditMode] = useState(true);
+  useEffect(() => {
+    const storedEditMode = localStorage.getItem('isEditMode');
+    if (storedEditMode === '0') {
+      setEditMode(false);
+    }
+    if (storedEditMode === '1') {
+      setEditMode(true);
+    }
+  }, []);
+  const detailsEditButton = () => {
+    setEditMode(true);
+    localStorage.setItem('isEditMode', '1');
+  };
+
   const changeHandler = (event) => {
     const { name, value } = event.target;
-    setEducationData((prevState) => ({
+    setCurrent((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    setEditMode((previousMode) => !previousMode);
-    props.passData(educationData);
+    setEditMode(false);
+    localStorage.setItem('isEditMode', '0');
+    if (!dataCtx.education.some((data) => data.id === props.id)) {
+      dataCtx.education.push(current);
+    } else {
+      const dataIndex = dataCtx.education.findIndex(
+        (data) => data.id === props.id
+      );
+      dataCtx.education[dataIndex] = current;
+    }
   };
-  const { schoolName, studyTitle, fromDate, toDate } = educationData;
   const { id, onDelete } = props;
-  const [editMode, setEditMode] = useState(false);
-  if (editMode) {
+
+  if (!editMode) {
     return (
       <EducationDetails
-        schoolName={schoolName}
-        studyTitle={studyTitle}
-        fromDate={fromDate}
-        toDate={toDate}
-        onEdit={() => setEditMode((previousMode) => !previousMode)}
+        key={uuidv4()}
+        schoolName={current.schoolName}
+        studyTitle={current.studyTitle}
+        fromDate={current.fromDate}
+        toDate={current.toDate}
+        onEdit={detailsEditButton}
         onDelete={() => onDelete('education', id)}
       ></EducationDetails>
     );
@@ -50,7 +81,7 @@ function EducationForm(props) {
           name="schoolName"
           placeholder="Enter School Name"
           className="school-name-input"
-          value={educationData.schoolName}
+          value={current.schoolName}
           onChange={changeHandler}
         />
         <label htmlFor="position-title" className="study-title">
@@ -61,7 +92,7 @@ function EducationForm(props) {
           name="studyTitle"
           placeholder="Enter Study Title"
           className="study-title-input"
-          value={educationData.studyTitle}
+          value={current.studyTitle}
           onChange={changeHandler}
         />
         <h3>Date of Study</h3>
@@ -69,20 +100,23 @@ function EducationForm(props) {
         <label htmlFor="to">To :</label>
         <input
           name="fromDate"
-          value={educationData.fromDate}
+          value={current.fromDate}
           onChange={changeHandler}
           type="date"
         />
         <input
           name="toDate"
-          value={educationData.toDate}
+          value={current.schoolName}
           onChange={changeHandler}
           type="date"
         />
       </form>
       {[
-        <SubmitButton submitForm={submitHandler}></SubmitButton>,
-        <DeleteButton clicked={() => onDelete('education', id)} />,
+        <SubmitButton key={uuidv4()} submitForm={submitHandler}></SubmitButton>,
+        <DeleteButton
+          key={uuidv4()}
+          clicked={() => onDelete('education', id)}
+        />,
       ]}
     </div>
   );

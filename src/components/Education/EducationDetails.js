@@ -1,5 +1,7 @@
 import EditButton from '../Buttons/EditButton';
 import DeleteButton from '../Buttons/DeleteButton';
+import { v4 as uuidv4 } from 'uuid';
+
 function EducationDetails(props) {
   const editFormHandler = () => {
     props.onEdit();
@@ -26,8 +28,8 @@ function EducationDetails(props) {
         <p>{props.toDate}</p>
       </form>
       {[
-        <EditButton clicked={editFormHandler} />,
-        <DeleteButton clicked={deleteHandler} />,
+        <EditButton key={uuidv4()} clicked={editFormHandler} />,
+        <DeleteButton key={uuidv4()} clicked={deleteHandler} />,
       ]}
     </div>
   );

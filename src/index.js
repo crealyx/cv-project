@@ -2,5 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/main.scss';
 import App from './components/App/App';
-
-ReactDOM.render(<App />, document.getElementById('root'));
+import { FormDataContextProvider } from './store/Context';
+ReactDOM.render(
+  <FormDataContextProvider>
+    <App />
+  </FormDataContextProvider>,
+  document.getElementById('root')
+);

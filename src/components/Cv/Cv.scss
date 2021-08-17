@@ -34,17 +34,19 @@
 .job-info {
   display: flex;
   justify-content: space-around;
-  margin: 0px 0;
+  margin: 0px 0px;
   border-bottom: 4px solid black;
+  width: 100%;
 }
 .school-cv {
   margin: 20px 0;
 }
 
 .experience-cv-container {
+  width: 100%;
   display: grid;
   gap: 10px;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 20px auto;
   background-color: rgb(255, 255, 255);

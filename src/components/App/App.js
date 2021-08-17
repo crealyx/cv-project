@@ -1,7 +1,6 @@
 import EducationForm from '../Education/EducationForm';
 import ExperienceForm from '../Experience/ExperienceForm';
 import PersonalForm from '../Personal/PersonalForm';
-import PersonalDetails from '../Personal/PersonalDetails';
 import Header from '../Header/Header';
 import Card from '../Card/Card';
 import React, { useState } from 'react';
@@ -12,8 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [educationIds, setEducationIds] = useState([]);
   const [experienceIds, setExperienceIds] = useState([]);
-  const [passedData, setPassedData] = useState();
-
+  const [educationDataList, setEducationDataList] = useState([]);
+  const [experienceDataList, setExperienceDataList] = useState([]);
   const addComponentHandler = (type) => {
     if (type === 'education') {
       let newId = uuidv4();
@@ -36,26 +35,35 @@ function App() {
       });
     }
   };
-  const dataHandler = (data) => {
-    setPassedData(data);
+
+  const educationDataHandler = (data) => {
+    // setPassedData(data);
     setEducationDataList((prevState) => [...prevState, data]);
-    console.log(educationDataList);
   };
-  const [educationDataList, setEducationDataList] = useState([]);
+  const experienceDataHandler = (data) => {
+    // setPassedData(data);
+    setExperienceDataList((prevState) => [...prevState, data]);
+  };
+
   const educationForms = educationIds.map((id) => (
     <EducationForm
       key={id}
       id={id}
-      passData={dataHandler}
+      passData={educationDataHandler}
+      setData={educationDataList}
       onDelete={deleteComponentHandler}
     />
   ));
   const experienceForms = experienceIds.map((id) => (
-    <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
+    <ExperienceForm
+      key={id}
+      id={id}
+      passData={experienceDataHandler}
+      onDelete={deleteComponentHandler}
+    />
   ));
 
   const changeToPreview = (e) => {
-    console.log(educationForms);
     if (
       e.target.classList.contains('preview-button') &&
       buttonPosition === 'right'
@@ -118,7 +126,12 @@ function App() {
           </Card>
         </div>
       ) : (
-        <Cv educationIds={educationIds} educationData={educationDataList}></Cv>
+        <Cv
+          educationIds={educationIds}
+          educationData={educationDataList}
+          experienceIds={experienceIds}
+          experienceData={experienceDataList}
+        ></Cv>
       )}
       <PreviewButton onClick={changeToPreview}></PreviewButton>
     </div>
