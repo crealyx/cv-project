@@ -2,34 +2,33 @@ import SubmitButton from '../Buttons/SubmitButton';
 import { useState, useEffect, useContext } from 'react';
 import PersonalDetails from './PersonalDetails';
 import FormDataContext from '../../store/form-data-context';
-function PersonalForm(props) {
+function PersonalForm() {
   const [editMode, setEditMode] = useState(true);
   const dataCtx = useContext(FormDataContext);
+  const storedEditMode = localStorage.getItem('personalIsEditing');
   useEffect(() => {
-    const storedEditMode = localStorage.getItem('isEditMode');
     if (storedEditMode === '0') {
       setEditMode(false);
-    }
-    if (storedEditMode === '1') {
+    } else if (storedEditMode === '1') {
       setEditMode(true);
     }
-  }, []);
+  }, [storedEditMode]);
   const detailsEditButton = () => {
-    setEditMode(true);
-    localStorage.setItem('isEditMode', '1');
+    setEditMode((prev) => !prev);
+    localStorage.setItem('personalIsEditing', '1');
   };
-  // const [personalData, setPersonalData] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   phone: '',
-  // });
+  function validateForm() {
+    const inputs = Object.values(dataCtx.personal);
+    if (inputs.some((input) => input === '')) {
+      alert('Please fill all inputs');
+      return true;
+    }
+  }
   const submitHandler = (event) => {
     event.preventDefault();
-    setEditMode(false);
-    localStorage.setItem('isEditMode', '0');
-    // dataCtx.addPersonalData(personalData);
-    // console.log(personalData);
+    if (validateForm()) return;
+    setEditMode((prev) => !prev);
+    localStorage.setItem('personalIsEditing', '0');
   };
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -37,11 +36,6 @@ function PersonalForm(props) {
       ...prevState,
       [name]: value,
     }));
-    // setPersonalData((prevState) => ({
-    //   ...prevState,
-    //   [name]: value,
-    // }));
-    // dataCtx.changePersonalData(event);
   };
 
   const { firstName, lastName, email, phone } = dataCtx.personal;

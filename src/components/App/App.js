@@ -9,10 +9,9 @@ import PreviewButton from '../Buttons/PreviewButton';
 import Cv from '../Cv/Cv';
 import { v4 as uuidv4 } from 'uuid';
 function App() {
+  localStorage.removeItem('isEditMode');
   const [educationIds, setEducationIds] = useState([]);
   const [experienceIds, setExperienceIds] = useState([]);
-  const [educationDataList, setEducationDataList] = useState([]);
-  const [experienceDataList, setExperienceDataList] = useState([]);
   const addComponentHandler = (type) => {
     if (type === 'education') {
       let newId = uuidv4();
@@ -36,31 +35,11 @@ function App() {
     }
   };
 
-  const educationDataHandler = (data) => {
-    // setPassedData(data);
-    setEducationDataList((prevState) => [...prevState, data]);
-  };
-  const experienceDataHandler = (data) => {
-    // setPassedData(data);
-    setExperienceDataList((prevState) => [...prevState, data]);
-  };
-
   const educationForms = educationIds.map((id) => (
-    <EducationForm
-      key={id}
-      id={id}
-      passData={educationDataHandler}
-      setData={educationDataList}
-      onDelete={deleteComponentHandler}
-    />
+    <EducationForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
   const experienceForms = experienceIds.map((id) => (
-    <ExperienceForm
-      key={id}
-      id={id}
-      passData={experienceDataHandler}
-      onDelete={deleteComponentHandler}
-    />
+    <ExperienceForm key={id} id={id} onDelete={deleteComponentHandler} />
   ));
 
   const changeToPreview = (e) => {
@@ -126,12 +105,7 @@ function App() {
           </Card>
         </div>
       ) : (
-        <Cv
-          educationIds={educationIds}
-          educationData={educationDataList}
-          experienceIds={experienceIds}
-          experienceData={experienceDataList}
-        ></Cv>
+        <Cv educationIds={educationIds} experienceIds={experienceIds}></Cv>
       )}
       <PreviewButton onClick={changeToPreview}></PreviewButton>
     </div>

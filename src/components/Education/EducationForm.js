@@ -1,6 +1,6 @@
 import SubmitButton from '../Buttons/SubmitButton';
 import DeleteButton from '../Buttons/DeleteButton';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useRef } from 'react';
 import EducationDetails from './EducationDetails';
 import FormDataContext from '../../store/form-data-context';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,28 +10,21 @@ function EducationForm(props) {
   const currentDataArray = dataCtx.education.filter(
     (data) => data.id === props.id
   );
+  const [editMode, setEditMode] = useState(true);
   const [current, setCurrent] = useState(
     currentDataArray[0] || {
       id: props.id,
+      isEditing: editMode,
       schoolName: '',
       studyTitle: '',
       fromDate: '',
       toDate: '',
     }
   );
-  const [editMode, setEditMode] = useState(true);
-  useEffect(() => {
-    const storedEditMode = localStorage.getItem('isEditMode');
-    if (storedEditMode === '0') {
-      setEditMode(false);
-    }
-    if (storedEditMode === '1') {
-      setEditMode(true);
-    }
-  }, []);
+  console.log(current);
   const detailsEditButton = () => {
-    setEditMode(true);
-    localStorage.setItem('isEditMode', '1');
+    setEditMode((prev) => !prev);
+    current.isEditing = true;
   };
 
   const changeHandler = (event) => {
@@ -41,12 +34,20 @@ function EducationForm(props) {
       [name]: value,
     }));
   };
+  function validateForm() {
+    const inputs = Object.values(current);
+    if (inputs.some((input) => input === '')) {
+      alert('Please fill all inputs');
+      return true;
+    }
+  }
   const submitHandler = (e) => {
     e.preventDefault();
-    setEditMode(false);
-    localStorage.setItem('isEditMode', '0');
+    if (validateForm()) return;
+    setEditMode((prev) => !prev);
+    current.isEditing = false;
     if (!dataCtx.education.some((data) => data.id === props.id)) {
-      dataCtx.education.push(current);
+      dataCtx.addEducationData(current);
     } else {
       const dataIndex = dataCtx.education.findIndex(
         (data) => data.id === props.id
@@ -55,8 +56,7 @@ function EducationForm(props) {
     }
   };
   const { id, onDelete } = props;
-
-  if (!editMode) {
+  if (!current.isEditing) {
     return (
       <EducationDetails
         key={uuidv4()}
@@ -106,7 +106,7 @@ function EducationForm(props) {
         />
         <input
           name="toDate"
-          value={current.schoolName}
+          value={current.toDate}
           onChange={changeHandler}
           type="date"
         />

@@ -11,9 +11,10 @@ function Cv(props) {
     return <EducationCv key={uuidv4()} educationData={newData[0]} />;
   });
   const experienceCvList = props.experienceIds.map((id) => {
-    let newData = props.experienceData.filter((data) => data.id === id);
+    let newData = dataCtx.experience.filter((data) => data.id === id);
     return <ExperienceCv key={uuidv4()} experienceData={newData[0]} />;
   });
+  console.log(dataCtx.experience);
   return (
     <div>
       <Card className="cv-container">

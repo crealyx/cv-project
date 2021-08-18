@@ -8,14 +8,7 @@ const FormDataContext = createContext({
     phone: '',
   },
   education: [],
-  experience: {
-    id: '',
-    companyName: '',
-    positionTitle: '',
-    mainTasks: '',
-    fromDate: '',
-    toDate: '',
-  },
+  experience: [],
   addPersonalData: () => {},
   addEducationData: () => {},
   addExperienceData: () => {},
@@ -23,16 +16,23 @@ const FormDataContext = createContext({
 
 export function FormDataContextProvider(props) {
   const [educationData, setEducationData] = useState([]);
-  const [experienceData, setExperienceData] = useState({});
-  const [personalData, setPersonalData] = useState({});
+  const [experienceData, setExperienceData] = useState([]);
+  const [personalData, setPersonalData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+  });
   const addPersonalDataHandler = (personalData) => {
     setPersonalData(personalData);
   };
 
   const addEducationDataHandler = (educationData) => {
-    setEducationData(educationData);
+    setEducationData((prevState) => [...prevState, educationData]);
   };
-  const addExperienceDataHandler = () => {};
+  const addExperienceDataHandler = (experienceData) => {
+    setExperienceData((prevState) => [...prevState, experienceData]);
+  };
   const context = {
     personal: {
       firstName: personalData.firstName,
@@ -41,16 +41,10 @@ export function FormDataContextProvider(props) {
       phone: personalData.phone,
     },
     education: educationData,
-    experience: {
-      id: experienceData.id,
-      companyName: experienceData.companyName,
-      positionTitle: experienceData.positionTitle,
-      mainTasks: experienceData.mainTasks,
-      fromDate: experienceData.fromDate,
-      toDate: experienceData.toDate,
-    },
+    experience: experienceData,
     addPersonalData: addPersonalDataHandler,
     addEducationData: addEducationDataHandler,
+    addExperienceData: addExperienceDataHandler,
   };
 
   return (

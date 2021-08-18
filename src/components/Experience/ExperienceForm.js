@@ -1,42 +1,74 @@
 import SubmitButton from '../Buttons/SubmitButton';
 import DeleteButton from '../Buttons/DeleteButton';
 import ExperienceDetails from './ExperienceDetails';
-import { useState } from 'react';
+import FormDataContext from '../../store/form-data-context';
+import { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 function ExperienceForm(props) {
-  const [experienceData, setExperienceData] = useState({
-    id: props.id,
-    companyName: '',
-    positionTitle: '',
-    mainTasks: '',
-    fromDate: '',
-    toDate: '',
-  });
+  const dataCtx = useContext(FormDataContext);
+  const currentDataArray = dataCtx.experience.filter(
+    (data) => data.id === props.id
+  );
+  const [editMode, setEditMode] = useState(true);
+  const [current, setCurrent] = useState(
+    currentDataArray[0] || {
+      id: props.id,
+      isEditing: editMode,
+      companyName: '',
+      positionTitle: '',
+      mainTasks: '',
+      fromDate: '',
+      toDate: '',
+    }
+  );
+
+  const detailsEditHandler = () => {
+    setEditMode((prev) => !prev);
+    current.isEditing = true;
+    // localStorage.setItem('isEditMode', '1');
+  };
+
   const changeHandler = (event) => {
     const { name, value } = event.target;
-    setExperienceData((prevState) => ({
+    setCurrent((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-
+  function validateForm() {
+    const inputs = Object.values(current);
+    if (inputs.some((input) => input === '')) {
+      alert('Please fill all inputs');
+      return true;
+    }
+  }
   const submitHandler = (e) => {
     e.preventDefault();
-    setEditMode((previousMode) => !previousMode);
-    props.passData(experienceData);
+    if (validateForm()) return;
+    setEditMode((prev) => !prev);
+    current.isEditing = false;
+    // localStorage.setItem('isEditMode', '0');
+    if (!dataCtx.experience.some((data) => data.id === props.id)) {
+      dataCtx.addExperienceData(current);
+    } else {
+      const dataIndex = dataCtx.experience.findIndex(
+        (data) => data.id === props.id
+      );
+      dataCtx.experience[dataIndex] = current;
+    }
   };
-  const { companyName, positionTitle, mainTasks, fromDate, toDate } =
-    experienceData;
-  const [editMode, setEditMode] = useState(false);
   const { id, onDelete } = props;
-  if (editMode) {
+  if (!current.isEditing) {
     return (
       <ExperienceDetails
-        companyName={companyName}
-        positionTitle={positionTitle}
-        mainTasks={mainTasks}
-        fromDate={fromDate}
-        toDate={toDate}
-        onEdit={() => setEditMode((previousMode) => !previousMode)}
+        key={uuidv4()}
+        companyName={current.companyName}
+        positionTitle={current.positionTitle}
+        mainTasks={current.mainTasks}
+        fromDate={current.fromDate}
+        toDate={current.toDate}
+        onEdit={detailsEditHandler}
         onDelete={() => onDelete('experience', id)}
       ></ExperienceDetails>
     );
@@ -53,7 +85,7 @@ function ExperienceForm(props) {
           name="companyName"
           placeholder="Enter Company Name"
           className="company-name-input"
-          value={experienceData.companyName}
+          value={current.companyName}
           onChange={changeHandler}
         />
         <label htmlFor="position-title" className="position-title">
@@ -64,7 +96,7 @@ function ExperienceForm(props) {
           name="positionTitle"
           placeholder="Enter Position Title"
           className="position-title-input"
-          value={experienceData.positionTitle}
+          value={current.positionTitle}
           onChange={changeHandler}
         />
         <label htmlFor="main-tasks" className="main-tasks">
@@ -75,7 +107,7 @@ function ExperienceForm(props) {
           name="mainTasks"
           className="main-tasks-input"
           placeholder="Enter your main tasks of this job"
-          value={experienceData.mainTasks}
+          value={current.mainTasks}
           onChange={changeHandler}
         />
         <label htmlFor="from">From :</label>
@@ -83,19 +115,22 @@ function ExperienceForm(props) {
         <input
           type="date"
           name="fromDate"
-          value={experienceData.fromDate}
+          value={current.fromDate}
           onChange={changeHandler}
         />
         <input
           type="date"
           name="toDate"
-          value={experienceData.toDate}
+          value={current.toDate}
           onChange={changeHandler}
         />
       </form>
       {[
-        <SubmitButton submitForm={submitHandler}></SubmitButton>,
-        <DeleteButton clicked={() => onDelete('experience', id)} />,
+        <SubmitButton key={uuidv4()} submitForm={submitHandler}></SubmitButton>,
+        <DeleteButton
+          key={uuidv4()}
+          clicked={() => onDelete('experience', id)}
+        />,
       ]}
     </div>
   );
