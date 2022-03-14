@@ -1,6 +1,6 @@
 {
-  "homepage": "https://crealyx.github.io/cv-project",
-  "name": "cv-project",
+  "homepage": "https://crealyx.github.io/cv-application",
+  "name": "cv-application",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
